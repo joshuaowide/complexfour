@@ -1,1 +1,16 @@
-
+[
+  {
+    "id": "h2-01",
+    "name": "Hydrogen Wellness Device",
+    "description": "Premium home unit (wellness use).",
+    "price_gbp_display": "£1499",
+    "stripe_price_id": "price_REPLACE_ME"
+  },
+  {
+    "id": "acc-01",
+    "name": "Replacement Filters",
+    "description": "Consumables pack.",
+    "price_gbp_display": "£49",
+    "stripe_price_id": "price_REPLACE_ME_TOO"
+  }
+]
