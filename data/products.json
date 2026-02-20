@@ -12,7 +12,7 @@
     },
     "stripe_price_id": {
       "GBP": "price_1T2xP7HxvjEeZYmXld8hDBxm",
-      "EUR": "price_1T2xTJHxvjEeZYmXQIPdGs71"
+      "EUR": "price_1T2xTJHxvjEeZYmXQIPdGs71",
       "USD": "price_1T2xSgHxvjEeZYmXJsujB94d"
     },
     "image_url": "",
