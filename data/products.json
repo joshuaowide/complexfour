@@ -1,16 +1,23 @@
 [
   {
-    "id": "h2-01",
-    "name": "Hydrogen Wellness Device",
-    "description": "Premium home unit (wellness use).",
-    "price_gbp_display": "£1499",
-    "stripe_price_id": "price_REPLACE_ME"
-  },
-  {
-    "id": "acc-01",
-    "name": "Replacement Filters",
-    "description": "Consumables pack.",
-    "price_gbp_display": "£49",
-    "stripe_price_id": "price_REPLACE_ME_TOO"
+    "id": "h2-flagship",
+    "name": "Hydrogen Wellness Inhalation Unit",
+    "short_description": "Flagship home unit for general wellness routines.",
+    "description": "A premium molecular hydrogen wellness unit intended for general wellness use. No medical claims are made. Follow included safety instructions and local regulations.",
+    "badge": "Flagship",
+    "price_display": {
+      "GBP": "£500",
+      "EUR": "€500"
+    },
+    "stripe_price_id": {
+      "GBP": "price_REPLACE_WITH_GBP_PRICE_ID",
+      "EUR": "price_REPLACE_WITH_EUR_PRICE_ID"
+    },
+    "image_url": "",
+    "specs": [
+      "General wellness use positioning",
+      "Secure checkout (Stripe hosted)",
+      "Shipping address collected at checkout"
+    ]
   }
 ]
