@@ -18,12 +18,12 @@
         </div>
       </a>
 
-    <nav class="nav">
-  <a class="navlink" href="/products.html">Buy The Device</a>
-  <a class="navlink" href="/about-hydrogen.html">About Hydrogen Inhalation</a>
-  <a class="navlink" href="/about-complex-four.html">About Complex Four</a>
-  <a class="navlink" href="/support.html">Support</a>
-</nav>
+      <nav class="nav">
+        <a class="navlink" href="/products.html">Buy The Device</a>
+        <a class="navlink" href="/about-hydrogen.html">About Hydrogen Inhalation</a>
+        <a class="navlink" href="/about-complex-four.html">About Complex Four</a>
+        <a class="navlink" href="/support.html">Support</a>
+      </nav>
 
       <div class="actions">
         <select id="currencySelect" class="select" aria-label="Currency">
@@ -40,8 +40,11 @@
   </header>
 
   <main class="container">
-    <section class="hero hero-split">
-      <div>
+
+    <!-- HERO: copy + what you get + image -->
+    <section class="hero hero-split hero-with-image">
+      <!-- Left column -->
+      <div class="hero-copy">
         <h1>At-home molecular hydrogen wellness.</h1>
         <p class="muted">
           complexfour provides equipment and education for general wellness use.
@@ -49,11 +52,12 @@
         </p>
         <div class="hero-cta">
           <a class="button" href="/products.html">Buy The Device</a>
-<a class="button secondary" href="/about-hydrogen.html">Learn about hydrogen</a>
+          <a class="button secondary" href="/about-hydrogen.html">Learn about hydrogen</a>
         </div>
       </div>
 
-      <div class="panel">
+      <!-- Middle column -->
+      <div class="panel hero-panel">
         <h3>What you get</h3>
         <ul class="checklist">
           <li>Portable and lightweight design: the complexfour hydrogen inhaler is easy to carry and set up</li>
@@ -62,19 +66,25 @@
           <li>Secure checkout via Stripe</li>
         </ul>
       </div>
+
+      <!-- Right column (image) -->
+      <div class="hero-media">
+        <img src="/assets/homepageimage.jpeg" alt="complexfour device" loading="eager" />
+      </div>
     </section>
 
-
+    <!-- IMPORTANT NOTICE (fixed padding / alignment) -->
     <section class="section notice">
-      <div class="container">
-      <h3>Important notice</h3>
-      <p class="muted">
-        Molecular hydrogen research is ongoing. Our products are sold for general wellness use.
-        We do not claim to diagnose, treat, cure, or prevent any disease. If you have a medical condition,
-        speak to a qualified clinician before using any wellness device.
-      </p>
-        </div>
+      <div class="notice-inner">
+        <h3>Important notice</h3>
+        <p class="muted">
+          Molecular hydrogen research is ongoing. Our products are sold for general wellness use.
+          We do not claim to diagnose, treat, cure, or prevent any disease. If you have a medical condition,
+          speak to a qualified clinician before using any wellness device.
+        </p>
+      </div>
     </section>
+
   </main>
 
   <footer class="footer">
@@ -83,17 +93,16 @@
         <strong>complexfour</strong><br/>
         <span class="muted">Wellness equipment & education.</span>
       </div>
-       <div class="footer-links">
-  <a href="/products.html">Buy The Device</a>
-  <a href="/about-hydrogen.html">About Hydrogen Inhalation</a>
-  <a href="/about-complex-four.html">About Complex Four</a>
-  <a href="/support.html">Support</a>
-  <a href="/terms.html">Terms</a>
-  <a href="/privacy.html">Privacy</a>
-</div>
+      <div class="footer-links">
+        <a href="/products.html">Buy The Device</a>
+        <a href="/about-hydrogen.html">About Hydrogen Inhalation</a>
+        <a href="/about-complex-four.html">About Complex Four</a>
+        <a href="/support.html">Support</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/privacy.html">Privacy</a>
+      </div>
     </div>
   </footer>
-
 
   <dialog id="cartDialog" class="dialog">
     <div class="dialog-header">
