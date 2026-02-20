@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Products — complexfour</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a class="brandwrap" href="/">
+        <img class="logo" src="/assets/logo.svg" alt="complexfour logo" />
+        <div class="brandtext">
+          <div class="brandname">complexfour</div>
+          <div class="brandsub">Products</div>
+        </div>
+      </a>
+
+      <nav class="nav">
+        <a class="navlink active" href="/products.html">Products</a>
+        <a class="navlink" href="/about.html">About</a>
+        <a class="navlink" href="/support.html">Support</a>
+      </nav>
+
+      <div class="actions">
+        <select id="currencySelect" class="select" aria-label="Currency">
+          <option value="GBP">GBP (£)</option>
+          <option value="EUR">EUR (€)</option>
+        </select>
+        <button id="cartBtn" class="button secondary">
+          Cart (<span id="cartCount">0</span>)
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section-head">
+      <h1>Products</h1>
+      <p class="muted">General wellness equipment. No medical claims.</p>
+    </div>
+
+    <div id="products" class="grid"></div>
+
+    <section class="section notice">
+      <h3>Medical disclaimer</h3>
+      <p class="muted">
+        Information on this site is for general educational purposes only and is not medical advice.
+        Products are not intended to diagnose, treat, cure, or prevent any disease.
+      </p>
+    </section>
+  </main>
+
+  <dialog id="cartDialog" class="dialog">
+    <div class="dialog-header">
+      <h3>Your cart</h3>
+      <button id="closeCart" class="button secondary">Close</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-footer">
+      <div class="row">
+        <strong>Total</strong>
+        <strong id="cartTotal">Calculated at checkout</strong>
+      </div>
+      <button id="checkoutBtn" class="button">Secure checkout</button>
+      <p class="fineprint">Checkout is handled securely by Stripe.</p>
+    </div>
+  </dialog>
+
+  <script src="/assets/app.js"></script>
+</body>
+</html>
