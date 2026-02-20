@@ -19,6 +19,7 @@
     .gallery-main { aspect-ratio: 4 / 3; display: grid; place-items: center; background: linear-gradient(180deg, rgba(255,243,214,.55), rgba(255,255,255,.90)); }
     .gallery-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .gallery-main .placeholder { padding: 34px 18px; text-align: center; color: var(--muted); }
+
     .thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 12px; border-top: 1px solid var(--border); background: rgba(255,255,255,.88); }
     .thumb { border: 1px solid var(--border); border-radius: 12px; background: rgba(255,255,255,.85); aspect-ratio: 1 / 1; display: grid; place-items: center; overflow: hidden; cursor: pointer; }
     .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -28,6 +29,7 @@
     .kicker { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: rgba(20,23,26,.60); margin: 0 0 10px; }
     .pdp-title { margin: 0 0 8px; letter-spacing: -.02em; }
     .pdp-sub { margin: 0 0 12px; color: var(--muted); line-height: 1.55; }
+
     .price-row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin: 12px 0 10px; padding: 12px; border: 1px solid var(--border); border-radius: 14px; background: rgba(255,255,255,.85); }
     .price-big { font-size: 22px; font-weight: 850; letter-spacing: .2px; }
     .stock { font-size: 12px; color: rgba(7,88,87,.95); background: var(--accent-soft); border: 1px solid rgba(14,165,164,.22); padding: 6px 10px; border-radius: 999px; }
@@ -100,8 +102,8 @@
       <section class="gallery" aria-label="Product images">
         <div class="gallery-main" id="galleryMain">
           <div class="placeholder">
-            <strong>Product image coming soon</strong><br/>
-            Add <code>/assets/device.jpg</code> (or set <code>image_url</code> in <code>/data/products.json</code>).
+            <strong>Loading image…</strong><br/>
+            <span class="fineprint">This will use <code>image_url</code> from <code>/data/products.json</code>.</span>
           </div>
         </div>
 
@@ -125,9 +127,9 @@
       <aside class="buybox sticky-buy" aria-label="Purchase options">
         <p class="kicker">Single flagship product</p>
 
-        <!-- These will auto-populate from products.json once loaded -->
-        <h1 class="pdp-title">Hydrogen Wellness Inhalation Unit</h1>
-        <p class="pdp-sub">
+        <div id="pdpBadge"></div>
+        <h1 class="pdp-title" id="pdpTitle">Hydrogen Wellness Inhalation Unit</h1>
+        <p class="pdp-sub" id="pdpDesc">
           A molecular hydrogen wellness unit intended for general wellness use and education. No medical claims are made.
         </p>
 
@@ -162,7 +164,7 @@
           </div>
         </div>
 
-        <ul class="bullets" aria-label="Key highlights">
+        <ul class="bullets" id="pdpHighlights" aria-label="Key highlights">
           <li>Designed for a simple daily routine</li>
           <li>General wellness / education-only positioning</li>
           <li>Secure Stripe-hosted checkout</li>
@@ -179,13 +181,11 @@
         </summary>
         <div class="divider"></div>
         <div class="content">
-          <ul class="bullets">
-            <li>The device</li>
+          <ul class="bullets" id="pdpIncludes">
+            <li>Hydrogen Wellness Inhalation Unit</li>
             <li>Power supply</li>
             <li>Quick-start guide</li>
-            <li>Consumables/accessories (as specified)</li>
           </ul>
-          <p class="fineprint">Update this list once your final “in the box” contents are confirmed.</p>
         </div>
       </details>
 
@@ -226,7 +226,6 @@
             <li>Tracking provided where available.</li>
             <li>If an item arrives damaged, contact support promptly.</li>
           </ul>
-          <p class="fineprint">Update once your shipping partners and returns window are final.</p>
         </div>
       </details>
 
@@ -236,19 +235,9 @@
           <span class="pill">Answers</span>
         </summary>
         <div class="divider"></div>
-        <div class="content">
+        <div class="content" id="pdpFaq">
           <p><strong>Is hydrogen inhalation safe?</strong><br/>
-            Safety depends on concentration, device design, ventilation, and correct use.
-            Always follow device instructions and use in a well-ventilated environment.
-          </p>
-
-          <p><strong>Can you make health claims?</strong><br/>
-            No. We position this for general wellness use and education.
-            We do not claim to diagnose, treat, cure, or prevent disease.
-          </p>
-
-          <p><strong>Do I need a prescription?</strong><br/>
-            This is sold as a wellness device. If you have a medical condition, consult a clinician before use.
+            Safety depends on concentration, device design, ventilation, and correct use. Always follow device instructions and use in a well-ventilated environment.
           </p>
         </div>
       </details>
@@ -308,19 +297,28 @@
 
   <script src="/assets/app.js"></script>
 
-  <!-- PDP behavior: uses app.js exposed window.products/addToCart/checkout/renderCart -->
+  <!-- PDP behavior: pulls badge/title/description/price/highlights/includes/faq from products.json -->
   <script>
     (function () {
       const main = document.getElementById("galleryMain");
       const thumbs = document.getElementById("thumbs");
 
+      const badgeHost = document.getElementById("pdpBadge");
+      const titleEl = document.getElementById("pdpTitle");
+      const descEl = document.getElementById("pdpDesc");
       const priceEl = document.getElementById("pdpPrice");
+      const highlightsEl = document.getElementById("pdpHighlights");
+      const includesEl = document.getElementById("pdpIncludes");
+      const faqEl = document.getElementById("pdpFaq");
+
       const addBtn = document.getElementById("pdpAddToCart");
       const buyNowBtn = document.getElementById("pdpBuyNow");
 
-      const titleEl = document.querySelector(".pdp-title");
-      const subEl = document.querySelector(".pdp-sub");
-      const highlightsEl = document.querySelector(".bullets");
+      function esc(s) {
+        return String(s ?? "").replace(/[&<>"']/g, (m) => ({
+          "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+        }[m]));
+      }
 
       function openCart() {
         const dlg = document.getElementById("cartDialog");
@@ -352,26 +350,41 @@
       }
 
       function updatePrice(p) {
-        if (!priceEl) return;
         const cur = getCurrency();
         const display = p?.price_display?.[cur];
-        priceEl.textContent = display || "Shown at checkout";
+        if (priceEl) priceEl.textContent = display || "Shown at checkout";
       }
 
-      function applyCopyFromJSON(p) {
-        if (!p) return;
-        if (titleEl) titleEl.textContent = p.name || titleEl.textContent;
-        if (subEl) subEl.textContent = p.description || subEl.textContent;
+      function renderBadge(p) {
+        if (!badgeHost) return;
+        badgeHost.innerHTML = p?.badge ? `<div class="badge">${esc(p.badge)}</div>` : "";
+      }
 
-        // Optional: if you add "highlights" array in products.json, this will auto-fill.
-        if (highlightsEl && Array.isArray(p.highlights) && p.highlights.length) {
-          highlightsEl.innerHTML = p.highlights.map(h => `<li>${h}</li>`).join("");
-        }
+      function renderHighlights(p) {
+        if (!highlightsEl) return;
+        const items = Array.isArray(p?.highlights) ? p.highlights : [];
+        if (!items.length) return;
+        highlightsEl.innerHTML = items.map(h => `<li>${esc(h)}</li>`).join("");
+      }
+
+      function renderIncludes(p) {
+        if (!includesEl) return;
+        const items = Array.isArray(p?.includes) ? p.includes : [];
+        if (!items.length) return;
+        includesEl.innerHTML = items.map(x => `<li>${esc(x)}</li>`).join("");
+      }
+
+      function renderFaq(p) {
+        if (!faqEl) return;
+        const items = Array.isArray(p?.faq) ? p.faq : [];
+        if (!items.length) return;
+
+        faqEl.innerHTML = items.map(item => `
+          <p><strong>${esc(item.q)}</strong><br/>${esc(item.a)}</p>
+        `).join("");
       }
 
       function wireButtons(p) {
-        if (!p) return;
-
         addBtn && addBtn.addEventListener("click", () => {
           if (typeof window.addToCart === "function") window.addToCart(p.id);
           openCart();
@@ -411,11 +424,21 @@
         const p = getProduct();
         if (p) {
           clearInterval(timer);
-          applyCopyFromJSON(p);
+
+          // Fill PDP from JSON
+          if (titleEl && p.name) titleEl.textContent = p.name;
+          if (descEl && p.description) descEl.textContent = p.description;
+
+          renderBadge(p);
+          renderHighlights(p);
+          renderIncludes(p);
+          renderFaq(p);
+
           updatePrice(p);
           wireButtons(p);
           wireGallery(p);
 
+          // Update price when currency changes
           const currencySelect = document.getElementById("currencySelect");
           if (currencySelect) currencySelect.addEventListener("change", () => updatePrice(p));
         } else if (tries > 80) {
