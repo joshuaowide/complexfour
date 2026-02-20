@@ -1,1 +1,9 @@
-
+{
+  "name": "netlify-stripe-store",
+  "version": "1.0.0",
+  "description": "Static e-commerce with Netlify Functions + Stripe",
+  "private": true,
+  "dependencies": {
+    "stripe": "^16.0.0"
+  }
+}
