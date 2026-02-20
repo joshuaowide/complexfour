@@ -98,11 +98,10 @@
     <div class="pdp-grid">
       <!-- LEFT: Gallery -->
       <section class="gallery" aria-label="Product images">
-        <!-- If you have an image, replace placeholder with <img src="/assets/device.jpg" alt="complexfour hydrogen inhalation device" /> -->
         <div class="gallery-main" id="galleryMain">
           <div class="placeholder">
             <strong>Product image coming soon</strong><br/>
-            Add <code>/assets/device.jpg</code> and it will appear here automatically.
+            Add <code>/assets/device.jpg</code> (or set <code>image_url</code> in <code>/data/products.json</code>).
           </div>
         </div>
 
@@ -125,10 +124,11 @@
       <!-- RIGHT: Buy box -->
       <aside class="buybox sticky-buy" aria-label="Purchase options">
         <p class="kicker">Single flagship product</p>
-        <h1 class="pdp-title">complexfour Hydrogen Inhalation Device</h1>
+
+        <!-- These will auto-populate from products.json once loaded -->
+        <h1 class="pdp-title">Hydrogen Wellness Inhalation Unit</h1>
         <p class="pdp-sub">
-          A simple, education-first hydrogen wellness device — designed for daily routines.
-          No miracle claims. No disease promises. Just clean hardware and clear guidance.
+          A molecular hydrogen wellness unit intended for general wellness use and education. No medical claims are made.
         </p>
 
         <div class="price-row">
@@ -140,7 +140,6 @@
         </div>
 
         <div class="buy-actions">
-          <!-- Primary action: add to cart (hooks into your existing app.js cart) -->
           <button id="pdpAddToCart" class="button">Add to cart</button>
           <button id="pdpBuyNow" class="button secondary">Buy now</button>
           <p class="fineprint">
@@ -164,9 +163,9 @@
         </div>
 
         <ul class="bullets" aria-label="Key highlights">
-          <li>Use with a nasal cannula (included/optional as specified)</li>
-          <li>Built-in safety features (as per product spec)</li>
-          <li>Guidance for starting a routine (non-medical)</li>
+          <li>Designed for a simple daily routine</li>
+          <li>General wellness / education-only positioning</li>
+          <li>Secure Stripe-hosted checkout</li>
         </ul>
       </aside>
     </div>
@@ -181,12 +180,12 @@
         <div class="divider"></div>
         <div class="content">
           <ul class="bullets">
-            <li>complexfour device</li>
+            <li>The device</li>
             <li>Power supply</li>
             <li>Quick-start guide</li>
-            <li>Consumables/accessories (as specified on your final spec sheet)</li>
+            <li>Consumables/accessories (as specified)</li>
           </ul>
-          <p class="fineprint">Tip: once your final “in the box” list is confirmed, update this section for accuracy.</p>
+          <p class="fineprint">Update this list once your final “in the box” contents are confirmed.</p>
         </div>
       </details>
 
@@ -207,7 +206,7 @@
             <li>If you have a medical condition or use oxygen therapy, consult a clinician before use.</li>
           </ul>
           <p class="fineprint">
-            This is educational content, not medical advice. Individual experiences vary and research is ongoing.
+            Educational content only — not medical advice. Individual experiences vary and research is ongoing.
           </p>
         </div>
       </details>
@@ -227,9 +226,7 @@
             <li>Tracking provided where available.</li>
             <li>If an item arrives damaged, contact support promptly.</li>
           </ul>
-          <p class="fineprint">
-            Update this section once you finalize your shipping partners and returns window.
-          </p>
+          <p class="fineprint">Update once your shipping partners and returns window are final.</p>
         </div>
       </details>
 
@@ -257,7 +254,6 @@
       </details>
     </section>
 
-    <!-- Comparison / reassurance section (optional but very “ecom”) -->
     <section class="section" aria-label="Why complexfour">
       <div class="section-head">
         <h2>Why complexfour</h2>
@@ -312,137 +308,121 @@
 
   <script src="/assets/app.js"></script>
 
-  <!-- PDP behavior: hook into existing cart + set price from first product -->
+  <!-- PDP behavior: uses app.js exposed window.products/addToCart/checkout/renderCart -->
   <script>
-    (function(){
-      // 1) Gallery swapping (only works once you add real images)
-      const main = document.getElementById('galleryMain');
-      const thumbs = document.getElementById('thumbs');
+    (function () {
+      const main = document.getElementById("galleryMain");
+      const thumbs = document.getElementById("thumbs");
 
-      function setMain(src){
-        // Try to load the image; if it fails, keep placeholder.
+      const priceEl = document.getElementById("pdpPrice");
+      const addBtn = document.getElementById("pdpAddToCart");
+      const buyNowBtn = document.getElementById("pdpBuyNow");
+
+      const titleEl = document.querySelector(".pdp-title");
+      const subEl = document.querySelector(".pdp-sub");
+      const highlightsEl = document.querySelector(".bullets");
+
+      function openCart() {
+        const dlg = document.getElementById("cartDialog");
+        if (dlg && typeof dlg.showModal === "function") dlg.showModal();
+        if (typeof window.renderCart === "function") window.renderCart();
+      }
+
+      function setMain(src, alt) {
+        if (!main) return;
         const img = new Image();
-        img.onload = () => { main.innerHTML = ''; img.alt = 'complexfour device'; main.appendChild(img); };
+        img.onload = () => {
+          main.innerHTML = "";
+          img.alt = alt || "complexfour device";
+          main.appendChild(img);
+        };
         img.onerror = () => {};
         img.src = src;
       }
 
-      if (thumbs){
-        thumbs.addEventListener('click', (e) => {
-          const btn = e.target.closest('.thumb');
-          if (!btn) return;
-          [...thumbs.querySelectorAll('.thumb')].forEach(t => t.classList.remove('active'));
-          btn.classList.add('active');
-          const src = btn.getAttribute('data-src');
-          if (src) setMain(src);
+      function getCurrency() {
+        const sel = document.getElementById("currencySelect");
+        return sel ? sel.value : (window.currency || "GBP");
+      }
+
+      function getProduct() {
+        const ps = window.products;
+        if (Array.isArray(ps) && ps.length) return ps[0];
+        return null;
+      }
+
+      function updatePrice(p) {
+        if (!priceEl) return;
+        const cur = getCurrency();
+        const display = p?.price_display?.[cur];
+        priceEl.textContent = display || "Shown at checkout";
+      }
+
+      function applyCopyFromJSON(p) {
+        if (!p) return;
+        if (titleEl) titleEl.textContent = p.name || titleEl.textContent;
+        if (subEl) subEl.textContent = p.description || subEl.textContent;
+
+        // Optional: if you add "highlights" array in products.json, this will auto-fill.
+        if (highlightsEl && Array.isArray(p.highlights) && p.highlights.length) {
+          highlightsEl.innerHTML = p.highlights.map(h => `<li>${h}</li>`).join("");
+        }
+      }
+
+      function wireButtons(p) {
+        if (!p) return;
+
+        addBtn && addBtn.addEventListener("click", () => {
+          if (typeof window.addToCart === "function") window.addToCart(p.id);
+          openCart();
+        });
+
+        buyNowBtn && buyNowBtn.addEventListener("click", async () => {
+          try {
+            if (typeof window.addToCart === "function") window.addToCart(p.id);
+            if (typeof window.checkout === "function") await window.checkout();
+            else openCart();
+          } catch (err) {
+            alert(err?.message || "Checkout failed");
+          }
         });
       }
 
-      // 2) Integrate with your existing app.js:
-      // Assumption: app.js renders products into #products on the old page.
-      // Here we instead fetch the first product from window.__PRODUCTS or a function if present.
-      // If your app.js exposes nothing, this still works as a graceful fallback (keeps page usable).
-      const priceEl = document.getElementById('pdpPrice');
-      const addBtn = document.getElementById('pdpAddToCart');
-      const buyNowBtn = document.getElementById('pdpBuyNow');
+      function wireGallery(p) {
+        const defaultSrc = p?.image_url || "/assets/device.jpg";
+        setMain(defaultSrc, p?.name || "complexfour device");
 
-      function formatMoney(amount, currency){
-        try{
-          return new Intl.NumberFormat(undefined, { style: 'currency', currency }).format(amount);
-        }catch(e){
-          return amount + ' ' + currency;
+        if (thumbs) {
+          thumbs.addEventListener("click", (e) => {
+            const btn = e.target.closest(".thumb");
+            if (!btn) return;
+            [...thumbs.querySelectorAll(".thumb")].forEach(t => t.classList.remove("active"));
+            btn.classList.add("active");
+            const src = btn.getAttribute("data-src");
+            if (src) setMain(src, p?.name);
+          });
         }
       }
 
-      function getCurrency(){
-        const sel = document.getElementById('currencySelect');
-        return sel ? sel.value : 'GBP';
-      }
+      // Wait for app.js init() to load products.json and expose window.products
+      let tries = 0;
+      const timer = setInterval(() => {
+        tries++;
+        const p = getProduct();
+        if (p) {
+          clearInterval(timer);
+          applyCopyFromJSON(p);
+          updatePrice(p);
+          wireButtons(p);
+          wireGallery(p);
 
-      function inferFirstProduct(){
-        // Common patterns you may have in app.js:
-        // - window.PRODUCTS / window.products / window.__PRODUCTS
-        // - window.getProducts()
-        const candidates = [
-          window.__PRODUCTS,
-          window.PRODUCTS,
-          window.products
-        ].filter(Boolean);
-
-        if (candidates.length && Array.isArray(candidates[0]) && candidates[0].length){
-          return candidates[0][0];
+          const currencySelect = document.getElementById("currencySelect");
+          if (currencySelect) currencySelect.addEventListener("change", () => updatePrice(p));
+        } else if (tries > 80) {
+          clearInterval(timer);
+          if (priceEl) priceEl.textContent = "Shown at checkout";
         }
-        if (typeof window.getProducts === 'function'){
-          const arr = window.getProducts();
-          if (Array.isArray(arr) && arr.length) return arr[0];
-        }
-        return null;
-      }
-
-      const product = inferFirstProduct();
-
-      // 3) Display price using whatever your product object contains
-      // Expected fields (guessing): priceGBP/priceUSD/priceEUR OR prices[currency] OR price
-      function readPrice(p, currency){
-        if (!p) return null;
-        if (p.prices && p.prices[currency] != null) return p.prices[currency];
-        const k = 'price' + currency;
-        if (p[k] != null) return p[k];
-        if (p.price != null) return p.price;
-        return null;
-      }
-
-      function updatePrice(){
-        const cur = getCurrency();
-        const amount = readPrice(product, cur);
-        if (amount == null){
-          priceEl.textContent = 'Shown at checkout';
-          return;
-        }
-        // If your app stores minor units (pence/cents), adjust here if needed.
-        priceEl.textContent = formatMoney(amount, cur);
-      }
-
-      updatePrice();
-      const currencySelect = document.getElementById('currencySelect');
-      if (currencySelect) currencySelect.addEventListener('change', updatePrice);
-
-      // 4) Add to cart + Buy now
-      // We try to call your app.js functions if they exist. If not, we open the cart dialog as a fallback.
-      function openCart(){
-        const dlg = document.getElementById('cartDialog');
-        if (dlg && typeof dlg.showModal === 'function') dlg.showModal();
-      }
-
-      addBtn && addBtn.addEventListener('click', () => {
-        if (product && typeof window.addToCart === 'function'){
-          window.addToCart(product.id || product.sku || product.name || 'device', 1);
-          openCart();
-          return;
-        }
-        // Fallback: if app.js uses a custom event pattern
-        if (product){
-          window.dispatchEvent(new CustomEvent('cart:add', { detail: { product, qty: 1 }}));
-          openCart();
-          return;
-        }
-        openCart();
-      });
-
-      buyNowBtn && buyNowBtn.addEventListener('click', () => {
-        // Prefer calling existing checkout handler
-        if (typeof window.checkout === 'function'){
-          window.checkout();
-          return;
-        }
-        // Fallback: click the existing checkout button if present
-        const checkoutBtn = document.getElementById('checkoutBtn');
-        if (checkoutBtn) checkoutBtn.click();
-        else openCart();
-      });
-
-      // Attempt to load main image automatically
-      setMain('/assets/device.jpg');
+      }, 50);
     })();
   </script>
 
