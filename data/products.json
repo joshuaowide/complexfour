@@ -1,25 +1,51 @@
 [
   {
     "id": "h2-flagship",
+    "slug": "hydrogen-wellness-inhalation-unit",
     "name": "Hydrogen Wellness Inhalation Unit",
-    "short_description": "Flagship home unit for general wellness routines.",
-    "description": "A premium molecular hydrogen wellness unit intended for general wellness use. No medical claims are made. Follow included safety instructions and local regulations.",
     "badge": "Flagship",
+    "short_description": "Flagship home unit for simple, daily wellness routines.",
+    "description": "A molecular hydrogen wellness unit intended for general wellness use and education. No medical claims are made. Always follow the included safety instructions and local regulations.",
     "price_display": {
       "GBP": "£499",
       "EUR": "€549",
       "USD": "$599"
+    },
+    "price_minor": {
+      "GBP": 49900,
+      "EUR": 54900,
+      "USD": 59900
     },
     "stripe_price_id": {
       "GBP": "price_1T2xP7HxvjEeZYmXld8hDBxm",
       "EUR": "price_1T2xTJHxvjEeZYmXQIPdGs71",
       "USD": "price_1T2xSgHxvjEeZYmXJsujB94d"
     },
-    "image_url": "",
+    "image_url": "/assets/device.jpg",
+    "highlights": [
+      "Designed for a simple daily routine",
+      "General wellness / education-only positioning",
+      "Secure Stripe-hosted checkout"
+    ],
     "specs": [
-      "General wellness use positioning",
-      "Secure checkout (Stripe hosted)",
+      "Use-positioning: general wellness (no medical claims)",
+      "Checkout: Stripe hosted",
       "Shipping address collected at checkout"
+    ],
+    "includes": [
+      "Hydrogen Wellness Inhalation Unit",
+      "Power supply",
+      "Quick-start guide"
+    ],
+    "faq": [
+      {
+        "q": "Is hydrogen inhalation safe?",
+        "a": "Safety depends on concentration, device design, ventilation, and correct use. Always follow device instructions and use in a well-ventilated environment. If you have a medical condition, consult a qualified clinician before use."
+      },
+      {
+        "q": "Do you make health claims?",
+        "a": "No. This product is sold for general wellness use and education. We do not claim to diagnose, treat, cure, or prevent any disease."
+      }
     ]
   }
 ]
