@@ -362,6 +362,24 @@ main > section, main > article{
 .footer-links a, footer a{ color: var(--muted); }
 .footer-links a:hover, footer a:hover{ color: var(--text); text-decoration: underline; }
 
+/* --- Product page: keep gallery + buy panel side-by-side --- */
+.product-detail{
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+  gap: 18px;
+  align-items: start;
+}
+
+/* Critical: allow grid children to shrink (prevents dropping) */
+.product-detail > *{
+  min-width: 0;
+}
+
+/* Only stack on mobile */
+@media (max-width: 860px){
+  .product-detail{ grid-template-columns: 1fr; }
+}
+
 /* --- Small-screen niceties --- */
 @media (max-width: 860px){
   .header-inner{ flex-wrap: wrap; }
@@ -498,4 +516,11 @@ main > section, main > article{
   aspect-ratio: 1 / 1;
   object-fit: cover;
   display: block;
+}
+
+/* Thumbnails sizing so they don't blow up the left column */
+.thumbs{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
 }
