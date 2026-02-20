@@ -6,12 +6,14 @@
     "description": "A premium molecular hydrogen wellness unit intended for general wellness use. No medical claims are made. Follow included safety instructions and local regulations.",
     "badge": "Flagship",
     "price_display": {
-      "GBP": "£500",
-      "EUR": "€500"
+      "GBP": "£499",
+      "EUR": "€549",
+      "USD": "€599"
     },
     "stripe_price_id": {
-      "GBP": "price_REPLACE_WITH_GBP_PRICE_ID",
-      "EUR": "price_REPLACE_WITH_EUR_PRICE_ID"
+      "GBP": "prod_U0zNLUsPRFKwmo",
+      "EUR": "price_1T2xTJHxvjEeZYmXQIPdGs71"
+      "USD": "price_1T2xSgHxvjEeZYmXJsujB94d"
     },
     "image_url": "",
     "specs": [
