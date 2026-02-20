@@ -423,3 +423,10 @@
   </footer>
 </body>
 </html>
+
+// Expose minimal API for PDP/custom pages
+window.products = products;
+window.addToCart = addToCart;
+window.renderCart = renderCart;
+window.checkout = checkout;
+window.currency = currency;
