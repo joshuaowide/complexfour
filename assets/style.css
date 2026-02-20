@@ -414,3 +414,38 @@ main > section, main > article{
     min-height: 220px;
   }
 }
+
+/* --- About Hydrogen: hero split with image --- */
+.page-hero.page-hero-split{
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.page-hero-media{
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: rgba(255,255,255,.90);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  min-height: 260px;
+  display: grid;
+  place-items: center;
+}
+
+.page-hero-media img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* change to 'contain' if you don't want any cropping */
+  display: block;
+}
+
+@media (max-width: 860px){
+  .page-hero.page-hero-split{
+    grid-template-columns: 1fr;
+  }
+  .page-hero-media{
+    min-height: 220px;
+  }
+}
