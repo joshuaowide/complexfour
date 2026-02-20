@@ -8,7 +8,7 @@
     "price_display": {
       "GBP": "£499",
       "EUR": "€549",
-      "USD": "€599"
+      "USD": "$599"
     },
     "stripe_price_id": {
       "GBP": "price_1T2xP7HxvjEeZYmXld8hDBxm",
