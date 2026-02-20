@@ -3,28 +3,108 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Store</title>
+  <title>complexfour — Molecular Hydrogen Wellness</title>
+  <meta name="description" content="complexfour — premium molecular hydrogen wellness equipment and education." />
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
 <body>
   <header class="header">
     <div class="container header-inner">
-      <h1 class="brand">My Store</h1>
-      <button id="cartBtn" class="button secondary">Cart (<span id="cartCount">0</span>)</button>
+      <a class="brandwrap" href="/">
+        <img class="logo" src="/assets/logo.svg" alt="complexfour logo" />
+        <div class="brandtext">
+          <div class="brandname">complexfour</div>
+          <div class="brandsub">Molecular Hydrogen • Wellness</div>
+        </div>
+      </a>
+
+      <nav class="nav">
+        <a class="navlink" href="/products.html">Products</a>
+        <a class="navlink" href="/about.html">About</a>
+        <a class="navlink" href="/support.html">Support</a>
+      </nav>
+
+      <div class="actions">
+        <select id="currencySelect" class="select" aria-label="Currency">
+          <option value="GBP">GBP (£)</option>
+          <option value="EUR">EUR (€)</option>
+        </select>
+
+        <button id="cartBtn" class="button secondary">
+          Cart (<span id="cartCount">0</span>)
+        </button>
+      </div>
     </div>
   </header>
 
   <main class="container">
-    <section class="hero">
-      <h2>Simple, fast, Netlify + GitHub e-commerce</h2>
-      <p>Static storefront with Stripe Checkout.</p>
+    <section class="hero hero-split">
+      <div>
+        <h1>Premium molecular hydrogen wellness — without the hype.</h1>
+        <p class="muted">
+          complexfour provides equipment and education for general wellness use.
+          No disease claims. No “miracle cure” marketing.
+        </p>
+        <div class="hero-cta">
+          <a class="button" href="/products.html">View products</a>
+          <a class="button secondary" href="/about.html">Read the guide</a>
+        </div>
+        <p class="fineprint">
+          For general wellness/educational purposes only. Not medical advice.
+        </p>
+      </div>
+
+      <div class="panel">
+        <h3>What you get</h3>
+        <ul class="checklist">
+          <li>Clear, non-medical positioning</li>
+          <li>Secure checkout via Stripe</li>
+          <li>Shipping address + contact details collected safely</li>
+          <li>Simple product pages built for conversion</li>
+        </ul>
+      </div>
     </section>
 
-    <section>
-      <h3>Products</h3>
+    <section class="section">
+      <div class="section-head">
+        <h2>Featured product</h2>
+        <p class="muted">A single flagship product is the best way to start.</p>
+      </div>
+      <div id="featured" class="grid"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Shop</h2>
+        <p class="muted">Browse products and add to cart.</p>
+      </div>
       <div id="products" class="grid"></div>
     </section>
+
+    <section class="section notice">
+      <h3>Important notice</h3>
+      <p class="muted">
+        Molecular hydrogen research is ongoing. Our products are sold for general wellness use.
+        We do not claim to diagnose, treat, cure, or prevent any disease. If you have a medical condition,
+        speak to a qualified clinician before using any wellness device.
+      </p>
+    </section>
   </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>complexfour</strong><br/>
+        <span class="muted">Wellness equipment & education.</span>
+      </div>
+      <div class="footer-links">
+        <a href="/about.html">About</a>
+        <a href="/support.html">Support</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/privacy.html">Privacy</a>
+      </div>
+    </div>
+  </footer>
 
   <dialog id="cartDialog" class="dialog">
     <div class="dialog-header">
@@ -35,10 +115,12 @@
     <div class="cart-footer">
       <div class="row">
         <strong>Total</strong>
-        <strong id="cartTotal">£0.00</strong>
+        <strong id="cartTotal">Calculated at checkout</strong>
       </div>
-      <button id="checkoutBtn" class="button">Checkout</button>
-      <p class="fineprint">Checkout is handled securely by Stripe.</p>
+      <button id="checkoutBtn" class="button">Secure checkout</button>
+      <p class="fineprint">
+        Checkout is handled securely by Stripe. Shipping address and contact details are collected during checkout.
+      </p>
     </div>
   </dialog>
 
