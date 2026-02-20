@@ -1,1 +1,25 @@
+:root { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; }
+body { margin: 0; background: #0b0f14; color: #e8eef6; }
+a { color: inherit; }
+.container { width: min(1000px, 92vw); margin: 0 auto; padding: 24px 0; }
+.header { position: sticky; top: 0; background: rgba(11,15,20,.9); border-bottom: 1px solid #1a2633; backdrop-filter: blur(8px); }
+.header-inner { display: flex; align-items: center; justify-content: space-between; }
+.brand { margin: 0; font-size: 18px; letter-spacing: .4px; }
+.hero { padding: 18px 0 10px; }
+.grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.card { border: 1px solid #1a2633; background: #0f1620; border-radius: 14px; padding: 16px; }
+.card h4 { margin: 0 0 6px; }
+.card p { margin: 0 0 12px; color: #b8c7d9; }
+.price { font-weight: 700; margin-bottom: 12px; }
+.button { border: 0; padding: 10px 12px; border-radius: 10px; background: #2d7cff; color: white; cursor: pointer; font-weight: 600; }
+.button.secondary { background: #1b2a3b; color: #e8eef6; border: 1px solid #26384d; }
+.button:disabled { opacity: .5; cursor: not-allowed; }
 
+.dialog { width: min(640px, 92vw); border: 1px solid #26384d; border-radius: 14px; background: #0f1620; color: #e8eef6; padding: 16px; }
+.dialog::backdrop { background: rgba(0,0,0,.6); }
+.dialog-header { display: flex; justify-content: space-between; align-items: center; }
+.cart-items { margin: 12px 0; display: grid; gap: 10px; }
+.cart-row { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: center; padding: 10px; border: 1px solid #1a2633; border-radius: 12px; }
+.qty { display: inline-flex; gap: 8px; align-items: center; }
+.fineprint { font-size: 12px; color: #b8c7d9; margin-top: 10px; }
+.row { display: flex; justify-content: space-between; margin: 10px 0; }
