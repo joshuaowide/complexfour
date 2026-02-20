@@ -449,3 +449,19 @@ main > section, main > article{
     min-height: 220px;
   }
 }
+
+/* About Hydrogen hero image */
+.page-hero-image{
+  margin: 18px 0 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  background: rgba(255,255,255,.9);
+}
+
+.page-hero-image img{
+  width: 100%;
+  height: auto;
+  display: block;
+}
