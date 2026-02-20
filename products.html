@@ -3,9 +3,62 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Products — complexfour</title>
+  <title>Buy The Device — complexfour</title>
+  <meta name="description" content="complexfour hydrogen inhalation device for general wellness use. Secure checkout via Stripe. No medical claims." />
   <link rel="stylesheet" href="/assets/style.css" />
+
+  <!-- PDP-only styles (keeps your global CSS clean). Move into style.css later if you want. -->
+  <style>
+    .pdp { padding-top: 14px; padding-bottom: 60px; }
+    .breadcrumbs { font-size: 12px; color: var(--muted); margin: 6px 0 14px; }
+    .breadcrumbs a { text-decoration: underline; text-decoration-color: rgba(20,23,26,.25); }
+    .pdp-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 18px; align-items: start; }
+    @media (max-width: 920px){ .pdp-grid { grid-template-columns: 1fr; } }
+
+    .gallery { border: 1px solid var(--border); border-radius: var(--radius); background: rgba(255,255,255,.92); box-shadow: var(--shadow-sm); overflow: hidden; }
+    .gallery-main { aspect-ratio: 4 / 3; display: grid; place-items: center; background: linear-gradient(180deg, rgba(255,243,214,.55), rgba(255,255,255,.90)); }
+    .gallery-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .gallery-main .placeholder { padding: 34px 18px; text-align: center; color: var(--muted); }
+    .thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 12px; border-top: 1px solid var(--border); background: rgba(255,255,255,.88); }
+    .thumb { border: 1px solid var(--border); border-radius: 12px; background: rgba(255,255,255,.85); aspect-ratio: 1 / 1; display: grid; place-items: center; overflow: hidden; cursor: pointer; }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .thumb.active { outline: 2px solid rgba(37,99,235,.35); border-color: rgba(37,99,235,.25); }
+
+    .buybox { border: 1px solid var(--border); border-radius: var(--radius); background: rgba(255,255,255,.92); box-shadow: var(--shadow-md); padding: 16px; }
+    .kicker { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: rgba(20,23,26,.60); margin: 0 0 10px; }
+    .pdp-title { margin: 0 0 8px; letter-spacing: -.02em; }
+    .pdp-sub { margin: 0 0 12px; color: var(--muted); line-height: 1.55; }
+    .price-row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin: 12px 0 10px; padding: 12px; border: 1px solid var(--border); border-radius: 14px; background: rgba(255,255,255,.85); }
+    .price-big { font-size: 22px; font-weight: 850; letter-spacing: .2px; }
+    .stock { font-size: 12px; color: rgba(7,88,87,.95); background: var(--accent-soft); border: 1px solid rgba(14,165,164,.22); padding: 6px 10px; border-radius: 999px; }
+
+    .buy-actions { display: grid; gap: 10px; margin-top: 10px; }
+    .trust { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
+    @media (max-width: 520px){ .trust { grid-template-columns: 1fr; } }
+    .trust-item { border: 1px solid var(--border); border-radius: 14px; padding: 10px 12px; background: rgba(255,255,255,.86); }
+    .trust-item strong { display: block; font-size: 13px; }
+    .trust-item span { display: block; font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.35; }
+
+    .bullets { margin: 10px 0 0; padding-left: 18px; color: var(--text); }
+    .bullets li { margin: 6px 0; }
+
+    .pdp-sections { margin-top: 18px; display: grid; gap: 14px; }
+    details.accordion { border: 1px solid var(--border); border-radius: var(--radius); background: rgba(255,255,255,.90); box-shadow: var(--shadow-sm); overflow: hidden; }
+    details.accordion summary { list-style: none; cursor: pointer; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-weight: 750; }
+    details.accordion summary::-webkit-details-marker { display: none; }
+    details.accordion .content { padding: 0 16px 16px; color: var(--muted); line-height: 1.6; }
+    .divider { height: 1px; background: var(--border); margin: 0 16px 14px; }
+
+    .compare { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    @media (max-width: 920px){ .compare { grid-template-columns: 1fr; } }
+    .compare .card { padding: 14px; }
+    .pill { display: inline-block; font-size: 12px; padding: 5px 10px; border-radius: 999px; border: 1px solid var(--border); background: rgba(255,255,255,.85); color: var(--muted); }
+
+    .sticky-buy { position: sticky; top: 92px; }
+    @media (max-width: 920px){ .sticky-buy { position: static; } }
+  </style>
 </head>
+
 <body>
   <header class="header">
     <div class="container header-inner">
@@ -13,16 +66,16 @@
         <img class="logo" src="/assets/logo.svg" alt="complexfour logo" />
         <div class="brandtext">
           <div class="brandname">complexfour</div>
-          <div class="brandsub">Products</div>
+          <div class="brandsub">Buy The Device</div>
         </div>
       </a>
 
-  <nav class="nav">
-  <a class="navlink" href="/products.html">Buy The Device</a>
-  <a class="navlink" href="/about-hydrogen.html">About Hydrogen Inhalation</a>
-  <a class="navlink" href="/about-complex-four.html">About Complex Four</a>
-  <a class="navlink" href="/support.html">Support</a>
-</nav>
+      <nav class="nav">
+        <a class="navlink active" href="/products.html">Buy The Device</a>
+        <a class="navlink" href="/about-hydrogen.html">About Hydrogen Inhalation</a>
+        <a class="navlink" href="/about-complex-four.html">About Complex Four</a>
+        <a class="navlink" href="/support.html">Support</a>
+      </nav>
 
       <div class="actions">
         <select id="currencySelect" class="select" aria-label="Currency">
@@ -37,23 +90,210 @@
     </div>
   </header>
 
-  <main class="container">
-    <div class="section-head">
-      <h1>Products</h1>
-      <p class="muted">General wellness equipment. No medical claims.</p>
+  <main class="container pdp">
+    <div class="breadcrumbs">
+      <a href="/">Home</a> <span aria-hidden="true">›</span> <span>Buy The Device</span>
     </div>
 
-    <div id="products" class="grid"></div>
+    <div class="pdp-grid">
+      <!-- LEFT: Gallery -->
+      <section class="gallery" aria-label="Product images">
+        <!-- If you have an image, replace placeholder with <img src="/assets/device.jpg" alt="complexfour hydrogen inhalation device" /> -->
+        <div class="gallery-main" id="galleryMain">
+          <div class="placeholder">
+            <strong>Product image coming soon</strong><br/>
+            Add <code>/assets/device.jpg</code> and it will appear here automatically.
+          </div>
+        </div>
+
+        <div class="thumbs" id="thumbs">
+          <button class="thumb active" type="button" data-src="/assets/device.jpg" aria-label="Main image">
+            <div class="placeholder" style="font-size:12px;padding:10px;">device.jpg</div>
+          </button>
+          <button class="thumb" type="button" data-src="/assets/device-2.jpg" aria-label="Angle view">
+            <div class="placeholder" style="font-size:12px;padding:10px;">device-2.jpg</div>
+          </button>
+          <button class="thumb" type="button" data-src="/assets/device-3.jpg" aria-label="In use">
+            <div class="placeholder" style="font-size:12px;padding:10px;">device-3.jpg</div>
+          </button>
+          <button class="thumb" type="button" data-src="/assets/device-4.jpg" aria-label="Accessories">
+            <div class="placeholder" style="font-size:12px;padding:10px;">device-4.jpg</div>
+          </button>
+        </div>
+      </section>
+
+      <!-- RIGHT: Buy box -->
+      <aside class="buybox sticky-buy" aria-label="Purchase options">
+        <p class="kicker">Single flagship product</p>
+        <h1 class="pdp-title">complexfour Hydrogen Inhalation Device</h1>
+        <p class="pdp-sub">
+          A simple, education-first hydrogen wellness device — designed for daily routines.
+          No miracle claims. No disease promises. Just clean hardware and clear guidance.
+        </p>
+
+        <div class="price-row">
+          <div>
+            <div class="muted" style="font-size:12px;margin-bottom:4px;">Price shown in selected currency</div>
+            <div class="price-big" id="pdpPrice">Loading…</div>
+          </div>
+          <div class="stock" aria-label="Availability">In stock</div>
+        </div>
+
+        <div class="buy-actions">
+          <!-- Primary action: add to cart (hooks into your existing app.js cart) -->
+          <button id="pdpAddToCart" class="button">Add to cart</button>
+          <button id="pdpBuyNow" class="button secondary">Buy now</button>
+          <p class="fineprint">
+            Checkout is handled securely by Stripe. Shipping address and contact details are collected during checkout.
+          </p>
+        </div>
+
+        <div class="trust" aria-label="Trust and logistics">
+          <div class="trust-item">
+            <strong>Secure checkout</strong>
+            <span>Stripe-hosted payment flow.</span>
+          </div>
+          <div class="trust-item">
+            <strong>Fast setup</strong>
+            <span>Designed for a simple daily routine.</span>
+          </div>
+          <div class="trust-item">
+            <strong>Clear positioning</strong>
+            <span>General wellness / education only.</span>
+          </div>
+        </div>
+
+        <ul class="bullets" aria-label="Key highlights">
+          <li>Use with a nasal cannula (included/optional as specified)</li>
+          <li>Built-in safety features (as per product spec)</li>
+          <li>Guidance for starting a routine (non-medical)</li>
+        </ul>
+      </aside>
+    </div>
+
+    <!-- Below-the-fold content -->
+    <section class="pdp-sections" aria-label="Product information">
+      <details class="accordion" open>
+        <summary>
+          What’s included
+          <span class="pill">In the box</span>
+        </summary>
+        <div class="divider"></div>
+        <div class="content">
+          <ul class="bullets">
+            <li>complexfour device</li>
+            <li>Power supply</li>
+            <li>Quick-start guide</li>
+            <li>Consumables/accessories (as specified on your final spec sheet)</li>
+          </ul>
+          <p class="fineprint">Tip: once your final “in the box” list is confirmed, update this section for accuracy.</p>
+        </div>
+      </details>
+
+      <details class="accordion">
+        <summary>
+          How to use (wellness routine)
+          <span class="pill">Simple routine</span>
+        </summary>
+        <div class="divider"></div>
+        <div class="content">
+          <p>
+            Many users start with short, consistent sessions and adjust over time based on comfort and goals.
+            A common consumer wellness starting point is <strong>20–30 minutes</strong> once daily, then reassess.
+          </p>
+          <ul class="bullets">
+            <li>Use in a well-ventilated space.</li>
+            <li>Follow the device instructions and safety guidance.</li>
+            <li>If you have a medical condition or use oxygen therapy, consult a clinician before use.</li>
+          </ul>
+          <p class="fineprint">
+            This is educational content, not medical advice. Individual experiences vary and research is ongoing.
+          </p>
+        </div>
+      </details>
+
+      <details class="accordion">
+        <summary>
+          Shipping & returns
+          <span class="pill">UK / EU / US</span>
+        </summary>
+        <div class="divider"></div>
+        <div class="content">
+          <p>
+            Shipping costs and delivery estimates are calculated at checkout based on your address.
+            Returns are accepted in line with our policy (see Terms/Returns).
+          </p>
+          <ul class="bullets">
+            <li>Tracking provided where available.</li>
+            <li>If an item arrives damaged, contact support promptly.</li>
+          </ul>
+          <p class="fineprint">
+            Update this section once you finalize your shipping partners and returns window.
+          </p>
+        </div>
+      </details>
+
+      <details class="accordion">
+        <summary>
+          FAQ
+          <span class="pill">Answers</span>
+        </summary>
+        <div class="divider"></div>
+        <div class="content">
+          <p><strong>Is hydrogen inhalation safe?</strong><br/>
+            Safety depends on concentration, device design, ventilation, and correct use.
+            Always follow device instructions and use in a well-ventilated environment.
+          </p>
+
+          <p><strong>Can you make health claims?</strong><br/>
+            No. We position this for general wellness use and education.
+            We do not claim to diagnose, treat, cure, or prevent disease.
+          </p>
+
+          <p><strong>Do I need a prescription?</strong><br/>
+            This is sold as a wellness device. If you have a medical condition, consult a clinician before use.
+          </p>
+        </div>
+      </details>
+    </section>
+
+    <!-- Comparison / reassurance section (optional but very “ecom”) -->
+    <section class="section" aria-label="Why complexfour">
+      <div class="section-head">
+        <h2>Why complexfour</h2>
+        <p class="muted">A calmer, more credible approach to hydrogen wellness.</p>
+      </div>
+
+      <div class="compare">
+        <div class="card">
+          <div class="badge">Education-first</div>
+          <h4>Clear, careful language</h4>
+          <p>We avoid hype. You’ll find practical guidance and responsible disclaimers.</p>
+        </div>
+        <div class="card">
+          <div class="badge">Simple checkout</div>
+          <h4>Stripe-secure payments</h4>
+          <p>Fast purchase flow with shipping/contact collected safely during checkout.</p>
+        </div>
+        <div class="card">
+          <div class="badge">Single product focus</div>
+          <h4>One device, done well</h4>
+          <p>Instead of dozens of SKUs, we optimize one flagship for a smooth start.</p>
+        </div>
+      </div>
+    </section>
 
     <section class="section notice">
       <h3>Medical disclaimer</h3>
       <p class="muted">
         Information on this site is for general educational purposes only and is not medical advice.
         Products are not intended to diagnose, treat, cure, or prevent any disease.
+        If you have a medical condition, consult a qualified clinician before use.
       </p>
     </section>
   </main>
 
+  <!-- Cart dialog (unchanged) -->
   <dialog id="cartDialog" class="dialog">
     <div class="dialog-header">
       <h3>Your cart</h3>
@@ -72,23 +312,155 @@
 
   <script src="/assets/app.js"></script>
 
-   <footer class="footer">
+  <!-- PDP behavior: hook into existing cart + set price from first product -->
+  <script>
+    (function(){
+      // 1) Gallery swapping (only works once you add real images)
+      const main = document.getElementById('galleryMain');
+      const thumbs = document.getElementById('thumbs');
+
+      function setMain(src){
+        // Try to load the image; if it fails, keep placeholder.
+        const img = new Image();
+        img.onload = () => { main.innerHTML = ''; img.alt = 'complexfour device'; main.appendChild(img); };
+        img.onerror = () => {};
+        img.src = src;
+      }
+
+      if (thumbs){
+        thumbs.addEventListener('click', (e) => {
+          const btn = e.target.closest('.thumb');
+          if (!btn) return;
+          [...thumbs.querySelectorAll('.thumb')].forEach(t => t.classList.remove('active'));
+          btn.classList.add('active');
+          const src = btn.getAttribute('data-src');
+          if (src) setMain(src);
+        });
+      }
+
+      // 2) Integrate with your existing app.js:
+      // Assumption: app.js renders products into #products on the old page.
+      // Here we instead fetch the first product from window.__PRODUCTS or a function if present.
+      // If your app.js exposes nothing, this still works as a graceful fallback (keeps page usable).
+      const priceEl = document.getElementById('pdpPrice');
+      const addBtn = document.getElementById('pdpAddToCart');
+      const buyNowBtn = document.getElementById('pdpBuyNow');
+
+      function formatMoney(amount, currency){
+        try{
+          return new Intl.NumberFormat(undefined, { style: 'currency', currency }).format(amount);
+        }catch(e){
+          return amount + ' ' + currency;
+        }
+      }
+
+      function getCurrency(){
+        const sel = document.getElementById('currencySelect');
+        return sel ? sel.value : 'GBP';
+      }
+
+      function inferFirstProduct(){
+        // Common patterns you may have in app.js:
+        // - window.PRODUCTS / window.products / window.__PRODUCTS
+        // - window.getProducts()
+        const candidates = [
+          window.__PRODUCTS,
+          window.PRODUCTS,
+          window.products
+        ].filter(Boolean);
+
+        if (candidates.length && Array.isArray(candidates[0]) && candidates[0].length){
+          return candidates[0][0];
+        }
+        if (typeof window.getProducts === 'function'){
+          const arr = window.getProducts();
+          if (Array.isArray(arr) && arr.length) return arr[0];
+        }
+        return null;
+      }
+
+      const product = inferFirstProduct();
+
+      // 3) Display price using whatever your product object contains
+      // Expected fields (guessing): priceGBP/priceUSD/priceEUR OR prices[currency] OR price
+      function readPrice(p, currency){
+        if (!p) return null;
+        if (p.prices && p.prices[currency] != null) return p.prices[currency];
+        const k = 'price' + currency;
+        if (p[k] != null) return p[k];
+        if (p.price != null) return p.price;
+        return null;
+      }
+
+      function updatePrice(){
+        const cur = getCurrency();
+        const amount = readPrice(product, cur);
+        if (amount == null){
+          priceEl.textContent = 'Shown at checkout';
+          return;
+        }
+        // If your app stores minor units (pence/cents), adjust here if needed.
+        priceEl.textContent = formatMoney(amount, cur);
+      }
+
+      updatePrice();
+      const currencySelect = document.getElementById('currencySelect');
+      if (currencySelect) currencySelect.addEventListener('change', updatePrice);
+
+      // 4) Add to cart + Buy now
+      // We try to call your app.js functions if they exist. If not, we open the cart dialog as a fallback.
+      function openCart(){
+        const dlg = document.getElementById('cartDialog');
+        if (dlg && typeof dlg.showModal === 'function') dlg.showModal();
+      }
+
+      addBtn && addBtn.addEventListener('click', () => {
+        if (product && typeof window.addToCart === 'function'){
+          window.addToCart(product.id || product.sku || product.name || 'device', 1);
+          openCart();
+          return;
+        }
+        // Fallback: if app.js uses a custom event pattern
+        if (product){
+          window.dispatchEvent(new CustomEvent('cart:add', { detail: { product, qty: 1 }}));
+          openCart();
+          return;
+        }
+        openCart();
+      });
+
+      buyNowBtn && buyNowBtn.addEventListener('click', () => {
+        // Prefer calling existing checkout handler
+        if (typeof window.checkout === 'function'){
+          window.checkout();
+          return;
+        }
+        // Fallback: click the existing checkout button if present
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        if (checkoutBtn) checkoutBtn.click();
+        else openCart();
+      });
+
+      // Attempt to load main image automatically
+      setMain('/assets/device.jpg');
+    })();
+  </script>
+
+  <footer class="footer">
     <div class="container footer-inner">
       <div>
         <strong>complexfour</strong><br/>
         <span class="muted">Wellness equipment & education.</span>
       </div>
-       <div class="footer-links">
-  <a href="/products.html">Buy The Device</a>
-  <a href="/about-hydrogen.html">About Hydrogen Inhalation</a>
-  <a href="/about-complex-four.html">About Complex Four</a>
-  <a href="/support.html">Support</a>
-  <a href="/terms.html">Terms</a>
-  <a href="/privacy.html">Privacy</a>
-</div>
+      <div class="footer-links">
+        <a href="/products.html">Buy The Device</a>
+        <a href="/about-hydrogen.html">About Hydrogen Inhalation</a>
+        <a href="/about-complex-four.html">About Complex Four</a>
+        <a href="/support.html">Support</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/privacy.html">Privacy</a>
+      </div>
     </div>
   </footer>
 </body>
-
-  
 </html>
