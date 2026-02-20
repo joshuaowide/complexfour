@@ -1,1 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Store</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <h1 class="brand">My Store</h1>
+      <button id="cartBtn" class="button secondary">Cart (<span id="cartCount">0</span>)</button>
+    </div>
+  </header>
 
+  <main class="container">
+    <section class="hero">
+      <h2>Simple, fast, Netlify + GitHub e-commerce</h2>
+      <p>Static storefront with Stripe Checkout.</p>
+    </section>
+
+    <section>
+      <h3>Products</h3>
+      <div id="products" class="grid"></div>
+    </section>
+  </main>
+
+  <dialog id="cartDialog" class="dialog">
+    <div class="dialog-header">
+      <h3>Your cart</h3>
+      <button id="closeCart" class="button secondary">Close</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-footer">
+      <div class="row">
+        <strong>Total</strong>
+        <strong id="cartTotal">£0.00</strong>
+      </div>
+      <button id="checkoutBtn" class="button">Checkout</button>
+      <p class="fineprint">Checkout is handled securely by Stripe.</p>
+    </div>
+  </dialog>
+
+  <script src="/assets/app.js"></script>
+</body>
+</html>
